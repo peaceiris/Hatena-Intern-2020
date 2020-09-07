@@ -14,7 +14,7 @@ configMapGenerator:
   - MODE=development
   - DATABASE_DSN=root@(blog-db:3306)/intern_2020_blog?time_zone=UTC&parseTime=true&loc=UTC
   - ACCOUNT_ADDR=account:50051
-  - RENDERER_ADDR=renderer-go:50051
+  - RENDERER_ADDR=renderer-ts:50051
 - name: blog-test-env-vars
   literals:
   - TEST_DATABASE_DSN=root@(blog-db:3306)/intern_2020_blog_test?time_zone=UTC&parseTime=true&loc=UTC

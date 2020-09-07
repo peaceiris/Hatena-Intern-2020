@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: renderer-ts
+  labels:
+    app: renderer-ts
+spec:
+  ports:
+  - port: 50051
+  selector:
+    app: renderer-ts
+    tier: app
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: renderer-ts
+  labels:
+    app: renderer-ts
+spec:
+  selector:
+    matchLabels:
+      app: renderer-ts
+      tier: app
+  template:
+    metadata:
+      labels:
+        app: renderer-ts
+        tier: app
+    spec:
+      containers:
+      - image: hatena-intern-2020-renderer-ts
+        imagePullPolicy: Never
+        name: renderer-ts
+        env:
+        - name: GRPC_PORT
+          value: "50051"
+        envFrom:
+        - configMapRef:
+            name: renderer-ts-app-env-vars
+        resources:
+          requests:
+            cpu: 100m
+            memory: 10Mi
+          limits:
+            cpu: 200m
+            memory: 20Mi
+        ports:
+        - containerPort: 50051
+          name: renderer-ts
+        readinessProbe:
+          exec:
+            command: ["/bin/grpc_health_probe", "-addr=:50051", "-connect-timeout=5s", "-rpc-timeout=5s"]
+          initialDelaySeconds: 5
+        livenessProbe:
+          exec:
+            command: ["/bin/grpc_health_probe", "-addr=:50051", "-connect-timeout=5s", "-rpc-timeout=5s"]
+          initialDelaySeconds: 10
+        securityContext:
+          runAsNonRoot: true
+          capabilities:
+            drop:
+            - all
+            add:
+            - NET_BIND_SERVICE
+          readOnlyRootFilesystem: true

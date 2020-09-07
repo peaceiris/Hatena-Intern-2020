@@ -5,4 +5,4 @@ resources:
 - namespace.yaml
 - account
 - blog
-- renderer-go
+- renderer-ts

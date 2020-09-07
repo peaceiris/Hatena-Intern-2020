@@ -16,8 +16,8 @@ build:
     context: services/blog
     docker:
       dockerfile: Dockerfile.test
-  - image: hatena-intern-2020-renderer-go
-    context: services/renderer-go
+  - image: hatena-intern-2020-renderer-ts
+    context: services/renderer-ts
   local:
     push: false
     useBuildkit: true
