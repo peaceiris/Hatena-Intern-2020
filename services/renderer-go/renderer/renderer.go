@@ -34,8 +34,7 @@ var markdown = goldmark.New(
 )
 
 // Render は受け取った文書を HTML に変換する
-func Render(ctx context.Context, src string) (string, error)
-{
+func Render(ctx context.Context, src string) (string, error) {
 	var html bytes.Buffer
 	if err := markdown.Convert([]byte(src), &html); err != nil {
 		fmt.Errorf("failed to render: %+v", err)
