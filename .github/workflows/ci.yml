@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'services/**'
+      - '**.md'
+  pull_request:
+    paths:
+      - 'services/**'
+      - '**.md'
+
+jobs:
+  renderer-go:
+    runs-on: ubuntu-18.04
+    defaults:
+      run:
+        shell: bash
+        working-directory: services/renderer-go
+    steps:
+      - uses: actions/checkout@v2.3.2
+
+      - name: Setup Go
+        uses: actions/setup-go@v2.1.2
+        with:
+          go-version: '1.15.1'
+
+      - run: go mod download
+      - run: make fmt
+      - run: make test
+      - run: make build
