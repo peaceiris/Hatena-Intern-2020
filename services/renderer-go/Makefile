@@ -13,4 +13,4 @@ test:
 
 .PHONY: fmt
 fmt:
-	gofmt -l **/*.go
+	test -z $(shell gofmt -l **/*.go)
