@@ -5,10 +5,12 @@ on:
     branches:
       - master
     paths:
+      - '.github/workflows/ci.yml'
       - 'services/**'
       - '**.md'
   pull_request:
     paths:
+      - '.github/workflows/ci.yml'
       - 'services/**'
       - '**.md'
 
