@@ -7,15 +7,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_Render_URL(t *testing.T) {
-	src := "foo https://google.com/ bar"
-	html, err := Render(context.Background(), src)
-	assert.NoError(t, err)
-	assert.Equal(t, "<p>foo <a href=\"https://google.com/\">https://google.com/</a> bar</p>\n", html)
-}
-
-func Test_Render_Heading(t *testing.T) {
-	src := `
+var rendertests = []struct {
+	in  string
+	out string
+}{
+	{"foo https://google.com/ bar", "<p>foo <a href=\"https://google.com/\">https://google.com/</a> bar</p>\n"},
+	{`
 # This is a h1 tag
 
 ## This is a h2 tag
@@ -27,21 +24,13 @@ func Test_Render_Heading(t *testing.T) {
 ##### This is a h5 tag
 
 ###### This is a h6 tag
-`
-	expected := `<h1>This is a h1 tag</h1>
+`, `<h1>This is a h1 tag</h1>
 <h2>This is a h2 tag</h2>
 <h3>This is a h3 tag</h3>
 <h4>This is a h4 tag</h4>
 <h5>This is a h5 tag</h5>
 <h6>This is a h6 tag</h6>
-`
-	html, err := Render(context.Background(), src)
-	assert.NoError(t, err)
-	assert.Equal(t, expected, html)
-}
-
-func Test_Render_Lists(t *testing.T) {
-	src := `
+`}, {`
 - foo
 - bar
 + baz
@@ -49,8 +38,7 @@ func Test_Render_Lists(t *testing.T) {
 1. foo
 2. bar
 3) baz
-`
-	expected := `<ul>
+`, `<ul>
 <li>foo</li>
 <li>bar</li>
 </ul>
@@ -64,22 +52,21 @@ func Test_Render_Lists(t *testing.T) {
 <ol start="3">
 <li>baz</li>
 </ol>
-`
-	html, err := Render(context.Background(), src)
-	assert.NoError(t, err)
-	assert.Equal(t, expected, html)
-}
-
-func Test_Render_Emoji(t *testing.T) {
-	src := `
+`}, {`
 :smile:
 
 ## Looks Good To Me :joy:
-`
-	expected := `<p>&#x1f604;</p>
+`, `<p>&#x1f604;</p>
 <h2>Looks Good To Me &#x1f602;</h2>
-`
-	html, err := Render(context.Background(), src)
-	assert.NoError(t, err)
-	assert.Equal(t, expected, html)
+`},
+}
+
+func Test_Render(t *testing.T) {
+	for _, tt := range rendertests {
+		t.Run(tt.in, func(t *testing.T) {
+			html, err := Render(context.Background(), tt.in)
+			assert.NoError(t, err)
+			assert.Equal(t, tt.out, html)
+		})
+	}
 }
