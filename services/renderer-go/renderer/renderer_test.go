@@ -53,10 +53,12 @@ var rendertests = []struct {
 <li>baz</li>
 </ol>
 `}, {`
-:smile:
+:+1:
+:smile::star:
 
 ## Looks Good To Me :joy:
-`, `<p>&#x1f604;</p>
+`, `<p>&#x1f44d;
+&#x1f604;&#x2b50;</p>
 <h2>Looks Good To Me &#x1f602;</h2>
 `},
 }

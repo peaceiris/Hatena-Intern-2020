@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	"github.com/yuin/goldmark"
-	"github.com/yuin/goldmark-emoji"
+	emoji "github.com/yuin/goldmark-emoji"
 	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/renderer/html"
 	"mvdan.cc/xurls/v2"
