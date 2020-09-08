@@ -7,7 +7,8 @@ import (
 
 	"github.com/yuin/goldmark"
 	"github.com/yuin/goldmark/extension"
-	"github.com/yuin/goldmark/renderer/html"
+    "github.com/yuin/goldmark/renderer/html"
+    "github.com/yuin/goldmark-emoji"
 	"mvdan.cc/xurls/v2"
 )
 
@@ -26,6 +27,9 @@ var markdown = goldmark.New(
                 xurls.Strict(),
             ),
         ),
+    ),
+    goldmark.WithExtensions(
+        emoji.Emoji,
     ),
 )
 

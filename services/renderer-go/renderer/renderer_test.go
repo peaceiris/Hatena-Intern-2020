@@ -69,3 +69,17 @@ func Test_Render_Lists(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, expected, html)
 }
+
+func Test_Render_Emoji(t *testing.T) {
+	src := `
+:smile:
+
+## Looks Good To Me :joy:
+`
+	expected := `<p>&#x1f604;</p>
+<h2>Looks Good To Me &#x1f602;</h2>
+`
+	html, err := Render(context.Background(), src)
+	assert.NoError(t, err)
+	assert.Equal(t, expected, html)
+}
