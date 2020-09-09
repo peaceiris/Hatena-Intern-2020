@@ -18,34 +18,34 @@ import (
 	pb_fetcher "github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/pb/fetcher"
 )
 
-var markdown = goldmark.New(
-	goldmark.WithRendererOptions(
-		html.WithXHTML(),
-		html.WithUnsafe(),
-	),
-	goldmark.WithExtensions(
-		extension.NewLinkify(
-			extension.WithLinkifyAllowedProtocols([][]byte{
-				[]byte("http:"),
-				[]byte("https:"),
-			}),
-			extension.WithLinkifyURLRegexp(
-				xurls.Strict(),
+// Render は受け取った文書を HTML に変換する
+func Render(ctx context.Context, src string, fetcherClient pb_fetcher.FetcherClient) (string, error) {
+	markdown := goldmark.New(
+		goldmark.WithRendererOptions(
+			html.WithXHTML(),
+			html.WithUnsafe(),
+		),
+		goldmark.WithExtensions(
+			extension.NewLinkify(
+				extension.WithLinkifyAllowedProtocols([][]byte{
+					[]byte("http:"),
+					[]byte("https:"),
+				}),
+				extension.WithLinkifyURLRegexp(
+					xurls.Strict(),
+				),
 			),
 		),
-	),
-	goldmark.WithExtensions(
-		emoji.Emoji,
-	),
-	goldmark.WithParserOptions(
-		parser.WithASTTransformers(
-			util.Prioritized(&autoTitleLinker{}, 999),
+		goldmark.WithExtensions(
+			emoji.Emoji,
 		),
-	),
-)
+		goldmark.WithParserOptions(
+			parser.WithASTTransformers(
+				util.Prioritized(&autoTitleLinker{fetcherCli: fetcherClient, context: ctx}, 999),
+			),
+		),
+	)
 
-// Render は受け取った文書を HTML に変換する
-func Render(ctx context.Context, src string) (string, error) {
 	var html bytes.Buffer
 	if err := markdown.Convert([]byte(src), &html); err != nil {
 		fmt.Errorf("failed to render: %+v", err)
@@ -56,22 +56,23 @@ func Render(ctx context.Context, src string) (string, error) {
 
 type autoTitleLinker struct {
 	fetcherCli pb_fetcher.FetcherClient
+	context    context.Context
 }
 
-func fetchTitle(url string) string {
-	// reply, err := l.fetcherCli.Fetch(ctx, &pb_fetcher.FetchRequest{Src: url})
-	// if err != nil {
-	// 	fmt.Errorf("failed to fetch: %+v", err)
-	// 	return ""
-	// }
-	// return reply.Title
-	return "example title"
+func fetchTitle(ctx context.Context, fetcherCli pb_fetcher.FetcherClient, url string) string {
+	reply, err := fetcherCli.Fetch(ctx, &pb_fetcher.FetchRequest{Src: url})
+	if err != nil {
+		fmt.Errorf("failed to fetch: %+v", err)
+		return ""
+	}
+	return reply.Title
+	// return "example title"
 }
 
 func (l *autoTitleLinker) Transform(node *ast.Document, reader text.Reader, pc parser.Context) {
 	ast.Walk(node, func(node ast.Node, entering bool) (ast.WalkStatus, error) {
 		if node, ok := node.(*ast.Link); ok && entering && node.ChildCount() == 0 {
-			node.AppendChild(node, ast.NewString([]byte(fetchTitle(string(node.Destination)))))
+			node.AppendChild(node, ast.NewString([]byte(fetchTitle(l.context, l.fetcherCli, string(node.Destination)))))
 		}
 		return ast.WalkContinue, nil
 	})

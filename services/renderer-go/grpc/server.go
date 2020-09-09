@@ -24,7 +24,7 @@ func NewServer(fetcherClient pb_fetcher.FetcherClient) *Server {
 
 // Render は受け取った文書を HTML に変換する
 func (s *Server) Render(ctx context.Context, in *pb.RenderRequest) (*pb.RenderReply, error) {
-	html, err := renderer.Render(ctx, in.Src)
+	html, err := renderer.Render(ctx, in.Src, s.fetcherClient)
 	if err != nil {
 		fmt.Errorf("failed to render: %+v", err)
 		return nil, err
