@@ -1,4 +1,4 @@
-module github.com/hatena/Hatena-Intern-2020/services/renderer-go
+module github.com/peaceiris/Hatena-Intern-2020/services/renderer-go
 
 go 1.14
 
