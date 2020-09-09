@@ -66,7 +66,6 @@ func fetchTitle(ctx context.Context, fetcherCli pb_fetcher.FetcherClient, url st
 		return ""
 	}
 	return reply.Title
-	// return "example title"
 }
 
 func (l *autoTitleLinker) Transform(node *ast.Document, reader text.Reader, pc parser.Context) {
