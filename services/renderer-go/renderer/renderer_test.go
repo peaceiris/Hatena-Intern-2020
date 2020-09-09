@@ -60,6 +60,12 @@ var rendertests = []struct {
 `, `<p>&#x1f44d;
 &#x1f604;&#x2b50;</p>
 <h2>Looks Good To Me &#x1f602;</h2>
+`}, {`## link samples
+[normal link](https://example.com)
+[](https://example.com)
+`, `<h2>link samples</h2>
+<p><a href="https://example.com">normal link</a>
+<a href="https://example.com">example title</a></p>
 `},
 }
 
