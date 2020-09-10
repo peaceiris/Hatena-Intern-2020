@@ -3,6 +3,6 @@ kind: Kustomization
 resources:
 - app.yaml
 configMapGenerator:
-- name: fetcher-app-env-vars
+- name: ogp-image-fetcher-app-env-vars
   literals:
   - MODE=development

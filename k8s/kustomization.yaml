@@ -7,3 +7,4 @@ resources:
 - blog
 - renderer-go
 - fetcher
+- ogp-image-fetcher

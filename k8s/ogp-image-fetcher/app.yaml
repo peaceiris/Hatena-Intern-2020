@@ -1,44 +1,44 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: fetcher
+  name: ogp-image-fetcher
   labels:
-    app: fetcher
+    app: ogp-image-fetcher
 spec:
   ports:
   - port: 50051
   selector:
-    app: fetcher
+    app: ogp-image-fetcher
     tier: app
   clusterIP: None
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fetcher
+  name: ogp-image-fetcher
   labels:
-    app: fetcher
+    app: ogp-image-fetcher
 spec:
   selector:
     matchLabels:
-      app: fetcher
+      app: ogp-image-fetcher
       tier: app
   template:
     metadata:
       labels:
-        app: fetcher
+        app: ogp-image-fetcher
         tier: app
     spec:
       containers:
-      - image: hatena-intern-2020-fetcher
+      - image: hatena-intern-2020-ogp-image-fetcher
         imagePullPolicy: Never
-        name: fetcher
+        name: ogp-image-fetcher
         env:
         - name: GRPC_PORT
           value: "50051"
         envFrom:
         - configMapRef:
-            name: fetcher-app-env-vars
+            name: ogp-image-fetcher-app-env-vars
         resources:
           requests:
             cpu: 100m
@@ -48,7 +48,7 @@ spec:
             memory: 20Mi
         ports:
         - containerPort: 50051
-          name: fetcher
+          name: ogp-image-fetcher
         readinessProbe:
           exec:
             command: ["/bin/grpc_health_probe", "-addr=:50051", "-connect-timeout=5s", "-rpc-timeout=5s"]
