@@ -1,41 +1,14 @@
-package renderer
+package fetcher
 
 import (
 	"context"
 	"fmt"
-	"golang.org/x/net/html"
-	"io"
 	"net/http"
+
+	"github.com/PuerkitoBio/goquery"
 )
 
-func isTitleElement(n *html.Node) bool {
-	return n.Type == html.ElementNode && n.Data == "title"
-}
-
-func getTitleFromHTMLNode(n *html.Node) (string, bool) {
-	if isTitleElement(n) {
-		return n.FirstChild.Data, true
-	}
-
-	for c := n.FirstChild; c != nil; c = c.NextSibling {
-		result, ok := getTitleFromHTMLNode(c)
-		if ok {
-			return result, ok
-		}
-	}
-	return "", false
-}
-
-func getTitleFromHTML(r io.Reader) (string, bool) {
-	doc, err := html.Parse(r)
-	if err != nil {
-		fmt.Errorf("Fail to parse html")
-		return "", false
-	}
-	return getTitleFromHTMLNode(doc)
-}
-
-// Fetch は受け取った URL から title を取得する
+// Fetch は受け取った URL から OGP Image URL を取得する
 func Fetch(ctx context.Context, url string) (string, error) {
 	resp, err := http.Get(url)
 	if err != nil {
@@ -44,8 +17,19 @@ func Fetch(ctx context.Context, url string) (string, error) {
 	}
 	defer resp.Body.Close()
 
-	if title, ok := getTitleFromHTML(resp.Body); ok {
-		return title, nil
+	// Load the HTML document
+	doc, err := goquery.NewDocumentFromReader(resp.Body)
+	if err != nil {
+		fmt.Errorf("failed to load html %s: %+v", url, err)
+		return "", err
 	}
-	return "", nil
+
+	// Find the meta tag that has property="og:image"
+	ogImageURL := ""
+	doc.Find("meta").Each(func(i int, s *goquery.Selection) {
+		if property, _ := s.Attr("property"); property == "og:image" {
+			ogImageURL, _ = s.Attr("content")
+		}
+	})
+	return ogImageURL, nil
 }

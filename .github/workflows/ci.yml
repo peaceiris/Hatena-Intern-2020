@@ -28,6 +28,7 @@ jobs:
         service:
           - renderer-go
           - fetcher
+          - ogp-image-fetcher
     defaults:
       run:
         shell: bash

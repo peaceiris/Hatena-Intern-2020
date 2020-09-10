@@ -3,7 +3,7 @@ FROM golang:1.14-alpine AS builder
 
 RUN apk --update add make
 
-WORKDIR /services/fetcher
+WORKDIR /services/ogp-image-fetcher
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
@@ -16,9 +16,9 @@ RUN GRPC_HEALTH_PROBE_VERSION=v0.3.2 && \
     wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
     chmod +x /bin/grpc_health_probe
 
-COPY --from=builder /services/fetcher/bin/server /services/fetcher/bin/server
+COPY --from=builder /services/ogp-image-fetcher/bin/server /services/ogp-image-fetcher/bin/server
 
 RUN adduser -D -u 1000 app
 USER 1000
 
-ENTRYPOINT ["/services/fetcher/bin/server"]
+ENTRYPOINT ["/services/ogp-image-fetcher/bin/server"]
