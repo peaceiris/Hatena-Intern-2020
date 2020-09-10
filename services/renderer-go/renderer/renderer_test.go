@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	pb_fetcher "github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/pb/fetcher"
+	pb_ogp_image_fetcher "github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/pb/ogp-image-fetcher"
 	"github.com/stretchr/testify/assert"
 	"google.golang.org/grpc"
 )
@@ -68,6 +69,9 @@ var rendertests = []struct {
 `, `<h2>link samples</h2>
 <p><a href="https://example.com">normal link</a>
 <a href="https://example.com">Example Domain</a></p>
+`}, {`{{ preview "https://example.com" }}
+`, `<p><a href="https://example.com">Example Domain</a>
+<img src="https://example.com/images/ogp.jpg" alt="" /></p>
 `},
 }
 
@@ -79,16 +83,29 @@ func (c *fakeFecherClient) Fetch(ctx context.Context, req *pb_fetcher.FetchReque
 	return c.FakeFetch(ctx, req)
 }
 
+type fakeOGPImageFecherClient struct {
+	FakeFetch func(ctx context.Context, req *pb_ogp_image_fetcher.FetchRequest, opt ...grpc.CallOption) (*pb_ogp_image_fetcher.FetchReply, error)
+}
+
+func (c *fakeOGPImageFecherClient) Fetch(ctx context.Context, req *pb_ogp_image_fetcher.FetchRequest, opt ...grpc.CallOption) (*pb_ogp_image_fetcher.FetchReply, error) {
+	return c.FakeFetch(ctx, req)
+}
+
 func Test_Render(t *testing.T) {
 	fecherCli := &fakeFecherClient{
 		FakeFetch: func(ctx context.Context, req *pb_fetcher.FetchRequest, opt ...grpc.CallOption) (*pb_fetcher.FetchReply, error) {
 			return &pb_fetcher.FetchReply{Title: "Example Domain"}, nil
 		},
 	}
+	ogpImageFecherCli := &fakeOGPImageFecherClient{
+		FakeFetch: func(ctx context.Context, req *pb_ogp_image_fetcher.FetchRequest, opt ...grpc.CallOption) (*pb_ogp_image_fetcher.FetchReply, error) {
+			return &pb_ogp_image_fetcher.FetchReply{Url: "https://example.com/images/ogp.jpg"}, nil
+		},
+	}
 
 	for _, tt := range rendertests {
 		t.Run(tt.in, func(t *testing.T) {
-			html, err := Render(context.Background(), tt.in, fecherCli)
+			html, err := Render(context.Background(), tt.in, fecherCli, ogpImageFecherCli)
 			assert.NoError(t, err)
 			assert.Equal(t, tt.out, html)
 		})

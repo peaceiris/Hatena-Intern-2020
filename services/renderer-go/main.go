@@ -23,6 +23,7 @@ import (
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 
 	pb_fetcher "github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/pb/fetcher"
+	pb_ogp_image_fetcher "github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/pb/ogp-image-fetcher"
 )
 
 func main() {
@@ -54,6 +55,14 @@ func run(args []string) error {
 	defer fetcherConn.Close()
 	fetcherCli := pb_fetcher.NewFetcherClient(fetcherConn)
 
+	// OGP Image 取得サービスに接続
+	ogpImageFetcherConn, err := grpc.Dial(conf.FetcherAddr, grpc.WithInsecure(), grpc.WithBlock())
+	if err != nil {
+		return fmt.Errorf("failed to connect to OGP image fetcher service: %+v", err)
+	}
+	defer ogpImageFetcherConn.Close()
+	ogpImageFetcherCli := pb_ogp_image_fetcher.NewFetcherClient(ogpImageFetcherConn)
+
 	// サーバーを起動
 	logger.Info(fmt.Sprintf("starting gRPC server (port = %v)", conf.GRPCPort))
 	lis, err := net.Listen("tcp", ":"+strconv.Itoa(conf.GRPCPort))
@@ -73,7 +82,7 @@ func run(args []string) error {
 			grpc_recovery.UnaryServerInterceptor(),
 		)),
 	)
-	svr := server.NewServer(fetcherCli)
+	svr := server.NewServer(fetcherCli, ogpImageFetcherCli)
 	pb.RegisterRendererServer(s, svr)
 	healthpb.RegisterHealthServer(s, svr)
 	go stop(s, conf.GracefulStopTimeout, logger)
