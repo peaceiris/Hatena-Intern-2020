@@ -18,7 +18,7 @@ type Config struct {
 	GRPCPort            int
 	GracefulStopTimeout time.Duration
 	FetcherAddr         string
-	ImageFetcherAddr	string
+	ImageFetcherAddr    string
 }
 
 // Load は環境変数から設定を読み込む
