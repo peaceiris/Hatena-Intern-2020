@@ -56,7 +56,7 @@ func run(args []string) error {
 	fetcherCli := pb_fetcher.NewFetcherClient(fetcherConn)
 
 	// OGP Image 取得サービスに接続
-	ogpImageFetcherConn, err := grpc.Dial(conf.FetcherAddr, grpc.WithInsecure(), grpc.WithBlock())
+	ogpImageFetcherConn, err := grpc.Dial(conf.ImageFetcherAddr, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
 		return fmt.Errorf("failed to connect to OGP image fetcher service: %+v", err)
 	}
