@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	pb "github.com/peaceiris/Hatena-Intern-2020/services/ogp-image-fetcher/pb/ogp-image-fetcher"
+	pb "github.com/peaceiris/Hatena-Intern-2020/services/image-fetcher/pb/image-fetcher"
 	"github.com/stretchr/testify/assert"
 	"gopkg.in/h2non/gock.v1"
 )

@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	pb_fetcher "github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/pb/fetcher"
-	pb_ogp_image_fetcher "github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/pb/ogp-image-fetcher"
+	pb_image_fetcher "github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/pb/image-fetcher"
 	"github.com/stretchr/testify/assert"
 	"google.golang.org/grpc"
 )
@@ -84,10 +84,10 @@ func (c *fakeFecherClient) Fetch(ctx context.Context, req *pb_fetcher.FetchReque
 }
 
 type fakeOGPImageFecherClient struct {
-	FakeFetch func(ctx context.Context, req *pb_ogp_image_fetcher.FetchRequest, opt ...grpc.CallOption) (*pb_ogp_image_fetcher.FetchReply, error)
+	FakeFetch func(ctx context.Context, req *pb_image_fetcher.FetchRequest, opt ...grpc.CallOption) (*pb_image_fetcher.FetchReply, error)
 }
 
-func (c *fakeOGPImageFecherClient) Fetch(ctx context.Context, req *pb_ogp_image_fetcher.FetchRequest, opt ...grpc.CallOption) (*pb_ogp_image_fetcher.FetchReply, error) {
+func (c *fakeOGPImageFecherClient) Fetch(ctx context.Context, req *pb_image_fetcher.FetchRequest, opt ...grpc.CallOption) (*pb_image_fetcher.FetchReply, error) {
 	return c.FakeFetch(ctx, req)
 }
 
@@ -98,8 +98,8 @@ func Test_Render(t *testing.T) {
 		},
 	}
 	ogpImageFecherCli := &fakeOGPImageFecherClient{
-		FakeFetch: func(ctx context.Context, req *pb_ogp_image_fetcher.FetchRequest, opt ...grpc.CallOption) (*pb_ogp_image_fetcher.FetchReply, error) {
-			return &pb_ogp_image_fetcher.FetchReply{Url: "https://example.com/images/ogp.jpg"}, nil
+		FakeFetch: func(ctx context.Context, req *pb_image_fetcher.FetchRequest, opt ...grpc.CallOption) (*pb_image_fetcher.FetchReply, error) {
+			return &pb_image_fetcher.FetchReply{Url: "https://example.com/images/ogp.jpg"}, nil
 		},
 	}
 

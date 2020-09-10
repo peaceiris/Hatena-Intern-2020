@@ -1,4 +1,4 @@
-module github.com/peaceiris/Hatena-Intern-2020/services/ogp-image-fetcher
+module github.com/peaceiris/Hatena-Intern-2020/services/image-fetcher
 
 go 1.14
 

@@ -17,11 +17,11 @@ import (
 	"mvdan.cc/xurls/v2"
 
 	pb_fetcher "github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/pb/fetcher"
-	pb_ogp_image_fetcher "github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/pb/ogp-image-fetcher"
+	pb_image_fetcher "github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/pb/image-fetcher"
 )
 
 // Render は受け取った文書を HTML に変換する
-func Render(ctx context.Context, src string, fetcherClient pb_fetcher.FetcherClient, ogpImageFetcherClient pb_ogp_image_fetcher.FetcherClient) (string, error) {
+func Render(ctx context.Context, src string, fetcherClient pb_fetcher.FetcherClient, ogpImageFetcherClient pb_image_fetcher.FetcherClient) (string, error) {
 	markdown := goldmark.New(
 		goldmark.WithRendererOptions(
 			html.WithXHTML(),
@@ -50,7 +50,7 @@ func Render(ctx context.Context, src string, fetcherClient pb_fetcher.FetcherCli
 
 	var funcs = template.FuncMap{
 		"preview": func(url string) string {
-			reply, err := ogpImageFetcherClient.Fetch(ctx, &pb_ogp_image_fetcher.FetchRequest{Url: url})
+			reply, err := ogpImageFetcherClient.Fetch(ctx, &pb_image_fetcher.FetchRequest{Url: url})
 			if err != nil {
 				fmt.Errorf("failed to fetch OGP image URL: %+v", err)
 				return "[](" + url + ")"

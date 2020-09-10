@@ -23,7 +23,7 @@ import (
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 
 	pb_fetcher "github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/pb/fetcher"
-	pb_ogp_image_fetcher "github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/pb/ogp-image-fetcher"
+	pb_image_fetcher "github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/pb/image-fetcher"
 )
 
 func main() {
@@ -61,7 +61,7 @@ func run(args []string) error {
 		return fmt.Errorf("failed to connect to OGP image fetcher service: %+v", err)
 	}
 	defer ogpImageFetcherConn.Close()
-	ogpImageFetcherCli := pb_ogp_image_fetcher.NewFetcherClient(ogpImageFetcherConn)
+	ogpImageFetcherCli := pb_image_fetcher.NewFetcherClient(ogpImageFetcherConn)
 
 	// サーバーを起動
 	logger.Info(fmt.Sprintf("starting gRPC server (port = %v)", conf.GRPCPort))

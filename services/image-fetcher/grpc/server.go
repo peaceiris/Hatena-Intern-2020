@@ -3,8 +3,8 @@ package grpc
 import (
 	"context"
 
-	fetcher "github.com/peaceiris/Hatena-Intern-2020/services/ogp-image-fetcher/fetcher"
-	pb "github.com/peaceiris/Hatena-Intern-2020/services/ogp-image-fetcher/pb/ogp-image-fetcher"
+	fetcher "github.com/peaceiris/Hatena-Intern-2020/services/image-fetcher/fetcher"
+	pb "github.com/peaceiris/Hatena-Intern-2020/services/image-fetcher/pb/image-fetcher"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 )
 

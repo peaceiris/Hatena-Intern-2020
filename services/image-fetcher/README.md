@@ -4,7 +4,7 @@
 
 主要なディレクトリ:
 
-- `ogp-image-fetcher/`: OGP 画像 URL 取得の実装が含まれる
+- `image-fetcher/`: OGP 画像 URL 取得の実装が含まれる
 - `grpc/`: `fetcher/` を gRPC で操作するためのインターフェース (gRPC サーバー) を実装する
 
 その他のディレクトリ:

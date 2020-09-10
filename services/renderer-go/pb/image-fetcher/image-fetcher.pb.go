@@ -2,9 +2,9 @@
 // versions:
 // 	protoc-gen-go v1.23.0
 // 	protoc        v3.12.2
-// source: ogp-image-fetcher.proto
+// source: image-fetcher.proto
 
-package ogp_image_fetcher
+package image_fetcher
 
 import (
 	context "context"
@@ -40,7 +40,7 @@ type FetchRequest struct {
 func (x *FetchRequest) Reset() {
 	*x = FetchRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_ogp_image_fetcher_proto_msgTypes[0]
+		mi := &file_image_fetcher_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -53,7 +53,7 @@ func (x *FetchRequest) String() string {
 func (*FetchRequest) ProtoMessage() {}
 
 func (x *FetchRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_ogp_image_fetcher_proto_msgTypes[0]
+	mi := &file_image_fetcher_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -66,7 +66,7 @@ func (x *FetchRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FetchRequest.ProtoReflect.Descriptor instead.
 func (*FetchRequest) Descriptor() ([]byte, []int) {
-	return file_ogp_image_fetcher_proto_rawDescGZIP(), []int{0}
+	return file_image_fetcher_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *FetchRequest) GetUrl() string {
@@ -87,7 +87,7 @@ type FetchReply struct {
 func (x *FetchReply) Reset() {
 	*x = FetchReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_ogp_image_fetcher_proto_msgTypes[1]
+		mi := &file_image_fetcher_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -100,7 +100,7 @@ func (x *FetchReply) String() string {
 func (*FetchReply) ProtoMessage() {}
 
 func (x *FetchReply) ProtoReflect() protoreflect.Message {
-	mi := &file_ogp_image_fetcher_proto_msgTypes[1]
+	mi := &file_image_fetcher_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -113,7 +113,7 @@ func (x *FetchReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FetchReply.ProtoReflect.Descriptor instead.
 func (*FetchReply) Descriptor() ([]byte, []int) {
-	return file_ogp_image_fetcher_proto_rawDescGZIP(), []int{1}
+	return file_image_fetcher_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *FetchReply) GetUrl() string {
@@ -123,48 +123,47 @@ func (x *FetchReply) GetUrl() string {
 	return ""
 }
 
-var File_ogp_image_fetcher_proto protoreflect.FileDescriptor
+var File_image_fetcher_proto protoreflect.FileDescriptor
 
-var file_ogp_image_fetcher_proto_rawDesc = []byte{
-	0x0a, 0x17, 0x6f, 0x67, 0x70, 0x2d, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x2d, 0x66, 0x65, 0x74, 0x63,
-	0x68, 0x65, 0x72, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x11, 0x6f, 0x67, 0x70, 0x5f, 0x69,
-	0x6d, 0x61, 0x67, 0x65, 0x5f, 0x66, 0x65, 0x74, 0x63, 0x68, 0x65, 0x72, 0x22, 0x20, 0x0a, 0x0c,
-	0x46, 0x65, 0x74, 0x63, 0x68, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10, 0x0a, 0x03,
-	0x75, 0x72, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x75, 0x72, 0x6c, 0x22, 0x1e,
-	0x0a, 0x0a, 0x46, 0x65, 0x74, 0x63, 0x68, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x12, 0x10, 0x0a, 0x03,
-	0x75, 0x72, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x75, 0x72, 0x6c, 0x32, 0x52,
-	0x0a, 0x07, 0x46, 0x65, 0x74, 0x63, 0x68, 0x65, 0x72, 0x12, 0x47, 0x0a, 0x05, 0x46, 0x65, 0x74,
-	0x63, 0x68, 0x12, 0x1f, 0x2e, 0x6f, 0x67, 0x70, 0x5f, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x66,
-	0x65, 0x74, 0x63, 0x68, 0x65, 0x72, 0x2e, 0x46, 0x65, 0x74, 0x63, 0x68, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x1a, 0x1d, 0x2e, 0x6f, 0x67, 0x70, 0x5f, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f,
+var file_image_fetcher_proto_rawDesc = []byte{
+	0x0a, 0x13, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x2d, 0x66, 0x65, 0x74, 0x63, 0x68, 0x65, 0x72, 0x2e,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x0d, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x66, 0x65, 0x74,
+	0x63, 0x68, 0x65, 0x72, 0x22, 0x20, 0x0a, 0x0c, 0x46, 0x65, 0x74, 0x63, 0x68, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x75, 0x72, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x03, 0x75, 0x72, 0x6c, 0x22, 0x1e, 0x0a, 0x0a, 0x46, 0x65, 0x74, 0x63, 0x68, 0x52,
+	0x65, 0x70, 0x6c, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x75, 0x72, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x03, 0x75, 0x72, 0x6c, 0x32, 0x4a, 0x0a, 0x07, 0x46, 0x65, 0x74, 0x63, 0x68, 0x65,
+	0x72, 0x12, 0x3f, 0x0a, 0x05, 0x46, 0x65, 0x74, 0x63, 0x68, 0x12, 0x1b, 0x2e, 0x69, 0x6d, 0x61,
+	0x67, 0x65, 0x5f, 0x66, 0x65, 0x74, 0x63, 0x68, 0x65, 0x72, 0x2e, 0x46, 0x65, 0x74, 0x63, 0x68,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x19, 0x2e, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f,
 	0x66, 0x65, 0x74, 0x63, 0x68, 0x65, 0x72, 0x2e, 0x46, 0x65, 0x74, 0x63, 0x68, 0x52, 0x65, 0x70,
-	0x6c, 0x79, 0x42, 0x41, 0x5a, 0x3f, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d,
+	0x6c, 0x79, 0x42, 0x3d, 0x5a, 0x3b, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d,
 	0x2f, 0x70, 0x65, 0x61, 0x63, 0x65, 0x69, 0x72, 0x69, 0x73, 0x2f, 0x48, 0x61, 0x74, 0x65, 0x6e,
 	0x61, 0x2d, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x2d, 0x32, 0x30, 0x32, 0x30, 0x2f, 0x70, 0x62,
-	0x2f, 0x67, 0x6f, 0x2f, 0x6f, 0x67, 0x70, 0x2d, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x2d, 0x66, 0x65,
-	0x74, 0x63, 0x68, 0x65, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x2f, 0x67, 0x6f, 0x2f, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x2d, 0x66, 0x65, 0x74, 0x63, 0x68, 0x65,
+	0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
-	file_ogp_image_fetcher_proto_rawDescOnce sync.Once
-	file_ogp_image_fetcher_proto_rawDescData = file_ogp_image_fetcher_proto_rawDesc
+	file_image_fetcher_proto_rawDescOnce sync.Once
+	file_image_fetcher_proto_rawDescData = file_image_fetcher_proto_rawDesc
 )
 
-func file_ogp_image_fetcher_proto_rawDescGZIP() []byte {
-	file_ogp_image_fetcher_proto_rawDescOnce.Do(func() {
-		file_ogp_image_fetcher_proto_rawDescData = protoimpl.X.CompressGZIP(file_ogp_image_fetcher_proto_rawDescData)
+func file_image_fetcher_proto_rawDescGZIP() []byte {
+	file_image_fetcher_proto_rawDescOnce.Do(func() {
+		file_image_fetcher_proto_rawDescData = protoimpl.X.CompressGZIP(file_image_fetcher_proto_rawDescData)
 	})
-	return file_ogp_image_fetcher_proto_rawDescData
+	return file_image_fetcher_proto_rawDescData
 }
 
-var file_ogp_image_fetcher_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
-var file_ogp_image_fetcher_proto_goTypes = []interface{}{
-	(*FetchRequest)(nil), // 0: ogp_image_fetcher.FetchRequest
-	(*FetchReply)(nil),   // 1: ogp_image_fetcher.FetchReply
+var file_image_fetcher_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_image_fetcher_proto_goTypes = []interface{}{
+	(*FetchRequest)(nil), // 0: image_fetcher.FetchRequest
+	(*FetchReply)(nil),   // 1: image_fetcher.FetchReply
 }
-var file_ogp_image_fetcher_proto_depIdxs = []int32{
-	0, // 0: ogp_image_fetcher.Fetcher.Fetch:input_type -> ogp_image_fetcher.FetchRequest
-	1, // 1: ogp_image_fetcher.Fetcher.Fetch:output_type -> ogp_image_fetcher.FetchReply
+var file_image_fetcher_proto_depIdxs = []int32{
+	0, // 0: image_fetcher.Fetcher.Fetch:input_type -> image_fetcher.FetchRequest
+	1, // 1: image_fetcher.Fetcher.Fetch:output_type -> image_fetcher.FetchReply
 	1, // [1:2] is the sub-list for method output_type
 	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -172,13 +171,13 @@ var file_ogp_image_fetcher_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_ogp_image_fetcher_proto_init() }
-func file_ogp_image_fetcher_proto_init() {
-	if File_ogp_image_fetcher_proto != nil {
+func init() { file_image_fetcher_proto_init() }
+func file_image_fetcher_proto_init() {
+	if File_image_fetcher_proto != nil {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		file_ogp_image_fetcher_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+		file_image_fetcher_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*FetchRequest); i {
 			case 0:
 				return &v.state
@@ -190,7 +189,7 @@ func file_ogp_image_fetcher_proto_init() {
 				return nil
 			}
 		}
-		file_ogp_image_fetcher_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+		file_image_fetcher_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*FetchReply); i {
 			case 0:
 				return &v.state
@@ -207,20 +206,20 @@ func file_ogp_image_fetcher_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_ogp_image_fetcher_proto_rawDesc,
+			RawDescriptor: file_image_fetcher_proto_rawDesc,
 			NumEnums:      0,
 			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_ogp_image_fetcher_proto_goTypes,
-		DependencyIndexes: file_ogp_image_fetcher_proto_depIdxs,
-		MessageInfos:      file_ogp_image_fetcher_proto_msgTypes,
+		GoTypes:           file_image_fetcher_proto_goTypes,
+		DependencyIndexes: file_image_fetcher_proto_depIdxs,
+		MessageInfos:      file_image_fetcher_proto_msgTypes,
 	}.Build()
-	File_ogp_image_fetcher_proto = out.File
-	file_ogp_image_fetcher_proto_rawDesc = nil
-	file_ogp_image_fetcher_proto_goTypes = nil
-	file_ogp_image_fetcher_proto_depIdxs = nil
+	File_image_fetcher_proto = out.File
+	file_image_fetcher_proto_rawDesc = nil
+	file_image_fetcher_proto_goTypes = nil
+	file_image_fetcher_proto_depIdxs = nil
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -248,7 +247,7 @@ func NewFetcherClient(cc grpc.ClientConnInterface) FetcherClient {
 
 func (c *fetcherClient) Fetch(ctx context.Context, in *FetchRequest, opts ...grpc.CallOption) (*FetchReply, error) {
 	out := new(FetchReply)
-	err := c.cc.Invoke(ctx, "/ogp_image_fetcher.Fetcher/Fetch", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/image_fetcher.Fetcher/Fetch", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -282,7 +281,7 @@ func _Fetcher_Fetch_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ogp_image_fetcher.Fetcher/Fetch",
+		FullMethod: "/image_fetcher.Fetcher/Fetch",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(FetcherServer).Fetch(ctx, req.(*FetchRequest))
@@ -291,7 +290,7 @@ func _Fetcher_Fetch_Handler(srv interface{}, ctx context.Context, dec func(inter
 }
 
 var _Fetcher_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "ogp_image_fetcher.Fetcher",
+	ServiceName: "image_fetcher.Fetcher",
 	HandlerType: (*FetcherServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -300,5 +299,5 @@ var _Fetcher_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "ogp-image-fetcher.proto",
+	Metadata: "image-fetcher.proto",
 }

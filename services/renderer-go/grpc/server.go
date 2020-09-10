@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	pb_fetcher "github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/pb/fetcher"
-	pb_ogp_image_fetcher "github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/pb/ogp-image-fetcher"
+	pb_image_fetcher "github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/pb/image-fetcher"
 	pb "github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/pb/renderer"
 	"github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/renderer"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
@@ -15,12 +15,12 @@ import (
 type Server struct {
 	pb.UnimplementedRendererServer
 	fetcherClient         pb_fetcher.FetcherClient
-	ogpImageFetcherClient pb_ogp_image_fetcher.FetcherClient
+	ogpImageFetcherClient pb_image_fetcher.FetcherClient
 	healthpb.UnimplementedHealthServer
 }
 
 // NewServer は gRPC サーバーを作成する
-func NewServer(fetcherClient pb_fetcher.FetcherClient, ogpImageFetcherClient pb_ogp_image_fetcher.FetcherClient) *Server {
+func NewServer(fetcherClient pb_fetcher.FetcherClient, ogpImageFetcherClient pb_image_fetcher.FetcherClient) *Server {
 	return &Server{fetcherClient: fetcherClient, ogpImageFetcherClient: ogpImageFetcherClient}
 }
 
