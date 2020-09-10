@@ -51,4 +51,13 @@ docker run -v "$(pwd):/pb" -w /pb --rm hatena-intern-2020-protoc-go \
     --go_opt=paths=source_relative \
     fetcher.proto
 cp -r ./go/fetcher ../services/fetcher/pb/
-cp -r ./go/fetcher ../services/renderer-go/pb
+cp -r ./go/fetcher ../services/renderer-go/pb/
+
+mkdir -p go/ogp-image-fetcher
+docker run -v "$(pwd):/pb" -w /pb --rm hatena-intern-2020-protoc-go \
+  protoc \
+    --go_out=plugins=grpc:go/ogp-image-fetcher \
+    --go_opt=paths=source_relative \
+    fetcher.proto
+cp -r ./go/ogp-image-fetcher ../services/ogp-image-fetcher/pb/
+cp -r ./go/ogp-image-fetcher ../services/renderer-go/pb/
