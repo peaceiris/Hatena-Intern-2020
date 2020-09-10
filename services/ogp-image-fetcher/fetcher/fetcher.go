@@ -13,7 +13,7 @@ func Fetch(ctx context.Context, url string) (string, error) {
 	resp, err := http.Get(url)
 	if err != nil {
 		fmt.Errorf("failed to fetch %s: %+v", url, err)
-		return "", err
+		return "", nil
 	}
 	defer resp.Body.Close()
 
@@ -21,7 +21,7 @@ func Fetch(ctx context.Context, url string) (string, error) {
 	doc, err := goquery.NewDocumentFromReader(resp.Body)
 	if err != nil {
 		fmt.Errorf("failed to load html %s: %+v", url, err)
-		return "", err
+		return "", nil
 	}
 
 	// Find the meta tag that has property="og:image"
