@@ -18,6 +18,7 @@ type Config struct {
 	GRPCPort            int
 	GracefulStopTimeout time.Duration
 	FetcherAddr         string
+	ImageFetcherAddr	string
 }
 
 // Load は環境変数から設定を読み込む
@@ -60,6 +61,13 @@ func Load() (*Config, error) {
 		return nil, errors.New("FETCHER_ADDR is not set")
 	}
 	conf.FetcherAddr = fetcherAddr
+
+	// ImageFetcherAddr
+	imageFetcherAddr := os.Getenv("IMAGE_FETCHER_ADDR")
+	if imageFetcherAddr == "" {
+		return nil, errors.New("IMAGE_FETCHER_ADDR is not set")
+	}
+	conf.ImageFetcherAddr = imageFetcherAddr
 
 	return conf, nil
 }
