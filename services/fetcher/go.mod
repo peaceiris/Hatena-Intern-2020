@@ -10,4 +10,5 @@ require (
 	golang.org/x/net v0.0.0-20190620200207-3b0461eec859
 	google.golang.org/grpc v1.30.0
 	google.golang.org/protobuf v1.25.0
+	gopkg.in/h2non/gock.v1 v1.0.15
 )
