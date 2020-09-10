@@ -20,6 +20,8 @@ build:
     context: services/renderer-go
   - image: hatena-intern-2020-fetcher
     context: services/fetcher
+  - image: hatena-intern-2020-image-fetcher
+    context: services/image-fetcher
   local:
     push: false
     useBuildkit: true
