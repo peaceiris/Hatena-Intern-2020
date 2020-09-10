@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 option go_package = "github.com/peaceiris/Hatena-Intern-2020/pb/go/ogp-image-fetcher"; // fake
-package ogp-image-fetcher;
+package fetcher;
 
 service Fetcher {
   rpc Fetch(FetchRequest) returns (FetchReply);
