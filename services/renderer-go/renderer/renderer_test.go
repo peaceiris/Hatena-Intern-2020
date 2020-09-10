@@ -4,7 +4,9 @@ import (
 	"context"
 	"testing"
 
+	pb_fetcher "github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/pb/fetcher"
 	"github.com/stretchr/testify/assert"
+	"google.golang.org/grpc"
 )
 
 var rendertests = []struct {
@@ -60,13 +62,33 @@ var rendertests = []struct {
 `, `<p>&#x1f44d;
 &#x1f604;&#x2b50;</p>
 <h2>Looks Good To Me &#x1f602;</h2>
+`}, {`## link samples
+[normal link](https://example.com)
+[](https://example.com)
+`, `<h2>link samples</h2>
+<p><a href="https://example.com">normal link</a>
+<a href="https://example.com">Example Domain</a></p>
 `},
 }
 
+type fakeFecherClient struct {
+	FakeFetch func(ctx context.Context, req *pb_fetcher.FetchRequest, opt ...grpc.CallOption) (*pb_fetcher.FetchReply, error)
+}
+
+func (c *fakeFecherClient) Fetch(ctx context.Context, req *pb_fetcher.FetchRequest, opt ...grpc.CallOption) (*pb_fetcher.FetchReply, error) {
+	return c.FakeFetch(ctx, req)
+}
+
 func Test_Render(t *testing.T) {
+	fecherCli := &fakeFecherClient{
+		FakeFetch: func(ctx context.Context, req *pb_fetcher.FetchRequest, opt ...grpc.CallOption) (*pb_fetcher.FetchReply, error) {
+			return &pb_fetcher.FetchReply{Title: "Example Domain"}, nil
+		},
+	}
+
 	for _, tt := range rendertests {
 		t.Run(tt.in, func(t *testing.T) {
-			html, err := Render(context.Background(), tt.in)
+			html, err := Render(context.Background(), tt.in, fecherCli)
 			assert.NoError(t, err)
 			assert.Equal(t, tt.out, html)
 		})
