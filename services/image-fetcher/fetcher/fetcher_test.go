@@ -60,7 +60,7 @@ func Test_Fetch_OGImageURL_Throw_Error_Not_Found_OGImageURL(t *testing.T) {
 		BodyString(HTMLWithoutMetaOGImage)
 
 	ogImageURL, err := Fetch(context.Background(), url)
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	assert.Equal(t, "", ogImageURL)
 }
 
@@ -73,6 +73,6 @@ func Test_Fetch_OGImageURL_Throw_Error_404(t *testing.T) {
 		Reply(404)
 
 	ogImageURL, err := Fetch(context.Background(), url)
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	assert.Equal(t, "", ogImageURL)
 }
