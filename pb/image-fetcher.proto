@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option go_package = "github.com/peaceiris/Hatena-Intern-2020/pb/go/image-fetcher"; // fake
+package image_fetcher;
+
+service Fetcher {
+  rpc Fetch(FetchRequest) returns (FetchReply);
+}
+
+// fetch
+
+message FetchRequest {
+  string url = 1;
+}
+
+message FetchReply {
+  string url = 1;
+}

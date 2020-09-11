@@ -14,16 +14,13 @@ import (
 	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
 	grpc_ctxtags "github.com/grpc-ecosystem/go-grpc-middleware/tags"
-	"github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/config"
-	server "github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/grpc"
-	"github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/log"
-	pb "github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/pb/renderer"
+	"github.com/peaceiris/Hatena-Intern-2020/services/image-fetcher/config"
+	server "github.com/peaceiris/Hatena-Intern-2020/services/image-fetcher/grpc"
+	"github.com/peaceiris/Hatena-Intern-2020/services/image-fetcher/log"
+	pb "github.com/peaceiris/Hatena-Intern-2020/services/image-fetcher/pb/image-fetcher"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
-
-	pb_fetcher "github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/pb/fetcher"
-	pb_image_fetcher "github.com/peaceiris/Hatena-Intern-2020/services/renderer-go/pb/image-fetcher"
 )
 
 func main() {
@@ -47,22 +44,6 @@ func run(args []string) error {
 	}
 	defer logger.Sync()
 
-	// Title 取得サービスに接続
-	fetcherConn, err := grpc.Dial(conf.FetcherAddr, grpc.WithInsecure(), grpc.WithBlock())
-	if err != nil {
-		return fmt.Errorf("failed to connect to fetcher service: %+v", err)
-	}
-	defer fetcherConn.Close()
-	fetcherCli := pb_fetcher.NewFetcherClient(fetcherConn)
-
-	// OGP Image 取得サービスに接続
-	ogpImageFetcherConn, err := grpc.Dial(conf.ImageFetcherAddr, grpc.WithInsecure(), grpc.WithBlock())
-	if err != nil {
-		return fmt.Errorf("failed to connect to OGP image fetcher service: %+v", err)
-	}
-	defer ogpImageFetcherConn.Close()
-	ogpImageFetcherCli := pb_image_fetcher.NewFetcherClient(ogpImageFetcherConn)
-
 	// サーバーを起動
 	logger.Info(fmt.Sprintf("starting gRPC server (port = %v)", conf.GRPCPort))
 	lis, err := net.Listen("tcp", ":"+strconv.Itoa(conf.GRPCPort))
@@ -82,8 +63,8 @@ func run(args []string) error {
 			grpc_recovery.UnaryServerInterceptor(),
 		)),
 	)
-	svr := server.NewServer(fetcherCli, ogpImageFetcherCli)
-	pb.RegisterRendererServer(s, svr)
+	svr := server.NewServer()
+	pb.RegisterFetcherServer(s, svr)
 	healthpb.RegisterHealthServer(s, svr)
 	go stop(s, conf.GracefulStopTimeout, logger)
 	if err := s.Serve(lis); err != nil {
